@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders - Brew & Bites</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+        }
+
+        .header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .back {
+            color: #6f4e37;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .orders {
+            background-color: white;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #6f4e37;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        select {
+            padding: 7px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #6f4e37;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #543725;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 30px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Brew & Bites</h1>
+
+        <p>Order Management</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <a href="/dashboard" class="back">
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="orders">
+
+            <h2>All Orders</h2>
+
+
+            {% if orders %}
+
+            <table>
+
+                <tr>
+
+                    <th>Order ID</th>
+
+                    <th>Customer</th>
+
+                    <th>Date</th>
+
+                    <th>Subtotal</th>
+
+                    <th>GST</th>
+
+                    <th>Total</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+
+                {% for order in orders %}
+
+                <tr>
+
+                    <td>
+                        #{{ order.id }}
+                    </td>
+
+
+                    <td>
+
+                        {% if order.customer_name %}
+
+                            {{ order.customer_name }}
+
+                        {% else %}
+
+                            Walk-in Customer
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ order.order_date }}
+                    </td>
+
+
+                    <td>
+                        ₹{{ order.subtotal }}
+                    </td>
+
+
+                    <td>
+                        ₹{{ order.gst }}
+                    </td>
+
+
+                    <td>
+                        ₹{{ order.total }}
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="/order/status/{{ order.id }}"
+                        >
+
+                            <select name="status">
+
+                                <option
+                                    value="Pending"
+                                    {% if order.status == "Pending" %}selected{% endif %}
+                                >
+                                    Pending
+                                </option>
+
+                                <option
+                                    value="Preparing"
+                                    {% if order.status == "Preparing" %}selected{% endif %}
+                                >
+                                    Preparing
+                                </option>
+
+                                <option
+                                    value="Ready"
+                                    {% if order.status == "Ready" %}selected{% endif %}
+                                >
+                                    Ready
+                                </option>
+
+                                <option
+                                    value="Completed"
+                                    {% if order.status == "Completed" %}selected{% endif %}
+                                >
+                                    Completed
+                                </option>
+
+                                <option
+                                    value="Cancelled"
+                                    {% if order.status == "Cancelled" %}selected{% endif %}
+                                >
+                                    Cancelled
+                                </option>
+
+                            </select>
+
+                    </td>
+
+
+                    <td>
+
+    <button type="submit">
+        Update
+    </button>
+
+</form>
+
+<a href="/bill/{{ order.id }}" target="_blank">
+
+    <button type="button">
+        View Bill
+    </button>
+
+</a>
+
+</td>
+
+                </tr>
+
+                {% endfor %}
+
+
+            </table>
+
+
+            {% else %}
+
+            <div class="no-orders">
+
+                <p>No orders have been placed yet.</p>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

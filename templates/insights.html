@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Insights - Brew & Bites</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+        }
+
+        .header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .back {
+            color: #6f4e37;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #6f4e37;
+        }
+
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .best-item {
+            background-color: white;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .best-item h2 {
+            color: #6f4e37;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Brew & Bites</h1>
+
+        <p>Daily Cafe Insights</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <a href="/dashboard" class="back">
+            ← Back to Dashboard
+        </a>
+
+
+        <h2>Today's Performance</h2>
+
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>Today's Sales</h3>
+
+                <div class="value">
+                    ₹{{ "%.2f"|format(summary.sales) }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Today's Orders</h3>
+
+                <div class="value">
+                    {{ summary.orders }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Average Order</h3>
+
+                <div class="value">
+                    ₹{{ "%.2f"|format(average_order) }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="best-item">
+
+            <h2>Best-Selling Item</h2>
+
+
+            {% if best_item %}
+
+                <p>
+                    <strong>{{ best_item.name }}</strong>
+                </p>
+
+                <p>
+                    {{ best_item.quantity }} item(s) sold today
+                </p>
+
+            {% else %}
+
+                <p>
+                    No sales recorded today.
+                </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bill - Brew & Bites</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .receipt {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #6f4e37;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            color: #6f4e37;
+            margin: 0;
+        }
+
+        .customer {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background-color: #6f4e37;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .amount {
+            text-align: right;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .grand-total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #6f4e37;
+        }
+
+        .print-button {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button {
+            background-color: #6f4e37;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        @media print {
+
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .receipt {
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .print-button {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="receipt">
+
+
+        <div class="header">
+
+            <h1>Brew & Bites</h1>
+
+            <p>Cafe Management System</p>
+
+            <p>Order #{{ order.id }}</p>
+
+        </div>
+
+
+        <div class="customer">
+
+            <p>
+                <strong>Customer:</strong>
+
+                {% if order.customer_name %}
+
+                    {{ order.customer_name }}
+
+                {% else %}
+
+                    Walk-in Customer
+
+                {% endif %}
+
+            </p>
+
+
+            {% if order.customer_phone %}
+
+            <p>
+                <strong>Phone:</strong>
+                {{ order.customer_phone }}
+            </p>
+
+            {% endif %}
+
+
+            <p>
+                <strong>Date:</strong>
+                {{ order.order_date }}
+            </p>
+
+
+            <p>
+                <strong>Status:</strong>
+                {{ order.status }}
+            </p>
+
+        </div>
+
+
+        <table>
+
+            <tr>
+
+                <th>Item</th>
+
+                <th>Qty</th>
+
+                <th>Price</th>
+
+                <th>Total</th>
+
+            </tr>
+
+
+            {% for item in items %}
+
+            <tr>
+
+                <td>
+                    {{ item.name }}
+                </td>
+
+                <td>
+                    {{ item.quantity }}
+                </td>
+
+                <td class="amount">
+                    ₹{{ item.price }}
+                </td>
+
+                <td class="amount">
+
+                    ₹{{ "%.2f"|format(item.price * item.quantity) }}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+        <div class="total-section">
+
+            <p>
+                Subtotal:
+                ₹{{ order.subtotal }}
+            </p>
+
+
+            <p>
+                GST (5%):
+                ₹{{ order.gst }}
+            </p>
+
+
+            <p class="grand-total">
+                Grand Total:
+                ₹{{ order.total }}
+            </p>
+
+        </div>
+
+
+        <div class="print-button">
+
+            <button onclick="window.print()">
+                Print Receipt
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

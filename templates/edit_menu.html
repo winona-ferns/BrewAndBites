@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Menu Item - Brew & Bites</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+        }
+
+        .header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 11px 20px;
+            background-color: #6f4e37;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #6f4e37;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Brew & Bites</h1>
+        <p>Edit Menu Item</p>
+    </div>
+
+    <div class="container">
+
+        <a href="/menu" class="back">
+            ← Back to Menu
+        </a>
+
+        <div class="form-box">
+
+            <h2>Edit {{ item.name }}</h2>
+
+            <form method="POST">
+
+                <label>Item Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ item.name }}"
+                    required
+                >
+
+                <label>Category</label>
+
+                <select name="category" required>
+
+                    <option value="Coffee"
+                        {% if item.category == "Coffee" %}selected{% endif %}>
+                        Coffee
+                    </option>
+
+                    <option value="Beverage"
+                        {% if item.category == "Beverage" %}selected{% endif %}>
+                        Beverage
+                    </option>
+
+                    <option value="Food"
+                        {% if item.category == "Food" %}selected{% endif %}>
+                        Food
+                    </option>
+
+                    <option value="Dessert"
+                        {% if item.category == "Dessert" %}selected{% endif %}>
+                        Dessert
+                    </option>
+
+                </select>
+
+                <label>Price</label>
+                <input
+                    type="number"
+                    name="price"
+                    value="{{ item.price }}"
+                    step="0.01"
+                    required
+                >
+
+                <label>Stock</label>
+                <input
+                    type="number"
+                    name="stock"
+                    value="{{ item.stock }}"
+                    required
+                >
+
+                <label>Low Stock Limit</label>
+                <input
+                    type="number"
+                    name="low_stock_limit"
+                    value="{{ item.low_stock_limit }}"
+                    required
+                >
+
+                <button type="submit">
+                    Update Item
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

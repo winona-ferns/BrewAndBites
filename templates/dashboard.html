@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Brew & Bites</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+        }
+
+        .header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .nav {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav a {
+            display: inline-block;
+            background-color: #6f4e37;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .nav a:hover {
+            background-color: #543725;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #6f4e37;
+        }
+
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .orders {
+            background-color: white;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #6f4e37;
+            color: white;
+        }
+
+        .logout {
+            background-color: #c0392b !important;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Brew & Bites</h1>
+
+        <p>Welcome, {{ username }}</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- NAVIGATION -->
+
+        <div class="nav">
+
+            <a href="/pos">
+                New Order
+            </a>
+
+            <a href="/menu">
+                Menu
+            </a>
+
+            <a href="/orders">
+                Orders
+            </a>
+
+            <a href="/inventory">
+                Inventory
+            </a>
+
+            <a href="/customers">
+                Customers
+            </a>
+
+            <a href="/reorder-alerts">
+                Reorder Alerts
+            </a>
+
+            <a href="/insights">
+                Daily Insights
+            </a>
+
+            <a href="/logout" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+
+        <h2>Dashboard</h2>
+
+
+        <!-- DASHBOARD CARDS -->
+
+        <div class="cards">
+
+
+            <div class="card">
+
+                <h3>Today's Sales</h3>
+
+                <div class="value">
+                    ₹{{ "%.2f"|format(today_sales) }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Today's Orders</h3>
+
+                <div class="value">
+                    {{ today_orders }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Menu Items</h3>
+
+                <div class="value">
+                    {{ menu_count }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Low Stock</h3>
+
+                <div class="value">
+                    {{ low_stock }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- RECENT ORDERS -->
+
+        <div class="orders">
+
+            <h2>Recent Orders</h2>
+
+
+            {% if recent_orders %}
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Order ID
+                    </th>
+
+                    <th>
+                        Customer
+                    </th>
+
+                    <th>
+                        Total
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                </tr>
+
+
+                {% for order in recent_orders %}
+
+                <tr>
+
+                    <td>
+                        #{{ order.id }}
+                    </td>
+
+                    <td>
+                        {{ order.customer_name or "Walk-in Customer" }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(order.total) }}
+                    </td>
+
+                    <td>
+                        {{ order.status }}
+                    </td>
+
+                    <td>
+                        {{ order.order_date }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+
+            </table>
+
+            {% else %}
+
+            <p>
+                No orders yet.
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

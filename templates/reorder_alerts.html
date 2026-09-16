@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Reorder Alerts - Brew & Bites</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f1ec;
+        }
+
+        .header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .back {
+            color: #6f4e37;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .box {
+            background-color: white;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #6f4e37;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .alert {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .no-alert {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>Brew & Bites</h1>
+
+        <p>Smart Reorder Alerts</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <a href="/dashboard" class="back">
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="box">
+
+            <h2>Items That Need Reordering</h2>
+
+
+            {% if items %}
+
+            <table>
+
+                <tr>
+
+                    <th>Item</th>
+
+                    <th>Category</th>
+
+                    <th>Current Stock</th>
+
+                    <th>Minimum Stock</th>
+
+                    <th>Recommendation</th>
+
+                </tr>
+
+
+                {% for item in items %}
+
+                <tr>
+
+                    <td>
+                        {{ item.name }}
+                    </td>
+
+                    <td>
+                        {{ item.category }}
+                    </td>
+
+                    <td class="alert">
+                        {{ item.stock }}
+                    </td>
+
+                    <td>
+                        {{ item.low_stock_limit }}
+                    </td>
+
+                    <td class="alert">
+                        Reorder Now
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+
+            {% else %}
+
+            <p class="no-alert">
+                All menu items have sufficient stock.
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
